@@ -5,10 +5,11 @@ const MAX = 3;
 const MIN = .325;
 function zoom(event){  
     event.preventDefault(); 
-    if (event.deltaY === -102 && standard < MAX){
+    console.log(event.deltaY)
+    if (event.deltaY < 0 && standard < MAX){
      standard += .1
     }
-    if (event.deltaY === 102 && standard > MIN) {
+    if (event.deltaY > 0 && standard > MIN) {
      standard -= .1
     }
     let level = Math.min(Math.max(standard, MIN), MAX)
