@@ -3,33 +3,31 @@ var isDragging = false;
 var mouseDownX, mouseDownY, scrollLeft, scrollTop;
 
 // Handle mouse down event
-document.querySelector('body').addEventListener('mousedown', function (event) {
-    isDragging = true;
-    mouseDownX = event.clientX;
-    mouseDownY = event.clientY;
-    scrollLeft = this.scrollLeft;
-    scrollTop = this.scrollTop;
-    console.log(event)
-});
+export function panMouseDown(event) {
+  event.preventDefault();
+  isDragging = true;
+  mouseDownX = event.clientX;
+  mouseDownY = event.clientY;
+  scrollLeft = window.scrollX;
+  scrollTop = window.scrollY;
+}
 
 // Handle mouse move event
-document.querySelector('body').addEventListener('mousemove', function (event) {
-    if (!isDragging) return;
-    var deltaX = event.clientX - mouseDownX;
-    var deltaY = event.clientY - mouseDownY;
-    this.scrollLeft = scrollLeft - deltaX;
-    this.scrollTop = scrollTop - deltaY;
-    console.log(event)
-});
+export function panMouseMove(event) {
+  if (!isDragging) return;
+  event.preventDefault();
+  var deltaX = event.clientX - mouseDownX;
+  var deltaY = event.clientY - mouseDownY;
+  window.scrollTo(scrollLeft - deltaX, scrollTop - deltaY)
+}
 
 // Handle mouse up event
-document.querySelector('body').addEventListener('mouseup', function () {
-    isDragging = false;
-    console.log("hohoho")
-});
+export function panMouseUp() {
+  isDragging = false;
+}
 
 // Handle mouse leave event
-document.querySelector('body').addEventListener('mouseleave', function () {
-    isDragging = false;
-    console.log("haha")
-});
+export function panMouseLeave() {
+  isDragging = false;
+}
+

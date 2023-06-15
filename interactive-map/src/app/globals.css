@@ -1,12 +1,26 @@
-
-body{
-  background-color: black;
-}
-#bigMap{
-  overflow-x: scroll;
-  /* transform: scale(.5); */
-}
-*{
+* {
   padding: 0;
   margin: 0;
+}
+
+body {
+  background-color: red;
+}
+
+#mapContainer {
+  background-color: blue;
+  width: 80%;
+  height: 80%;
+}
+
+#bigMap {
+}
+
+#edge{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  background-color: blueviolet;
+  justify-content: center;
+  align-items: center;
 }
