@@ -23,9 +23,9 @@ export default function Home() {
   return (
     <div id='edge'>
       <div id='mapContainer'>
-        <Image id='bigMap'
-          src={map}
-        />
+          <Image id='bigMap'
+            src={map}
+          />
       </div>
     </div>
   )
