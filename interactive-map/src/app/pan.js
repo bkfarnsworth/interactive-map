@@ -4,9 +4,9 @@ var mouseDownX, mouseDownY, scrollLeft, scrollTop;
 
 // Handle mouse down event
 export function panMouseDown(event) {
-  console.log(`OffsetX: ${event.offsetX} OffsetY: ${event.offsetY}`)
-  console.log(`ClientX: ${event.clientX} ClientY: ${event.clientY}`)
-  console.log(`SrollX: ${event.target.scrollTop} ScrollY: ${event.target.scrollLeft}`)
+  // console.log(`OffsetX: ${event.offsetX} OffsetY: ${event.offsetY}`)
+  // console.log(`ClientX: ${event.clientX} ClientY: ${event.clientY}`)
+  // console.log(`SrollX: ${event.target.scrollTop} ScrollY: ${event.target.scrollLeft}`)
   event.preventDefault();
   isDragging = true;
   mouseDownX = event.clientX;
