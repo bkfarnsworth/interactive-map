@@ -40,13 +40,17 @@ function zoom(event) {
     map.style.paddingBottom = newHeight + 'px';
     map.style.paddingRight = newWidth + 'px';
 
+    /**
+     * I think the formula is something like this. Assuming we are doubling the zoom level, then:
+     * 
+     * 1. given any map position/zoom, there is going be some existing level of scrollLeft and scrollTop before we change the zoom.  It makes sense that those scroll amounts will have to be doubled if we are doubling the zoom
+     * 2. Then add in the offset of the mouse position relative to the map container.  This is the amount of pixels that the mouse is away from the top left corner of the map container.  And we need to double those amounts because we are doubling the zoom.
+     * 3. Then the tricky part for me to wrap my head around is then we still have to subtract the original "undoubled" mouseOffsets.  I think this is because, if we didn't, it will scroll it so that the item under your cursor will be in the top left corner of the map container.  We want it to be exactly where your cursor is. So scroll the container a little less to account for where your mouse is. I THINK..... still not sure I wrapped my head around it.  
+     */
     let newScrollTop = (currentScollTop * (1 + percentChange)) + (mouseRelToMC.y * (1 + percentChange)) - mouseRelToMC.y;
     let newScrollLeft = (currentScollLeft * (1 + percentChange)) + (mouseRelToMC.x * (1 + percentChange)) - mouseRelToMC.x;
     mapContainer.scrollLeft = newScrollLeft
     mapContainer.scrollTop = newScrollTop;
-
-
-
 
     console.log('######### AFTER ZOOM #########')
     printStats(event, level)
