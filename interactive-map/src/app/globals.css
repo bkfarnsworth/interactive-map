@@ -12,6 +12,20 @@ body {
   width: 80%;
   height: 80%;
   overflow: scroll;
+  position: relative;
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
+}
+
+#mapUniverse {
+  /* position: relative;
+  top: -1000px;
+  left: -1000px;
+  right: 3000px;
+  bottom: 3000px; */
+  /* height: 1000px; */
+  /* width: 1000px; */
 }
 
 #bigMap {
