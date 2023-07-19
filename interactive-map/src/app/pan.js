@@ -9,19 +9,19 @@ export function panMouseDown(event) {
   console.log(`SrollX: ${event.target.scrollTop} ScrollY: ${event.target.scrollLeft}`)
   event.preventDefault();
   isDragging = true;
-  mouseDownX = event.clientX;
-  mouseDownY = event.clientY;
-  scrollLeft = window.scrollX;
-  scrollTop = window.scrollY;
+  mouseDownX = event.offsetX;
+  mouseDownY = event.offsetY;
+  scrollLeft = document.querySelector('#mapContainer').scrollLeft;
+  scrollTop = document.querySelector('#mapContainer').scrollTop;
 }
 
 // Handle mouse move event
 export function panMouseMove(event) {
   if (!isDragging) return;
   event.preventDefault();
-  var deltaX = event.clientX - mouseDownX;
-  var deltaY = event.clientY - mouseDownY;
-  window.scrollTo(scrollLeft - deltaX, scrollTop - deltaY)
+  var deltaX = event.offsetX - mouseDownX;
+  var deltaY = event.offsetY - mouseDownY;
+  document.querySelector('#mapContainer').scrollTo(scrollLeft - deltaX, scrollTop - deltaY)
 }
 
 // Handle mouse up event
