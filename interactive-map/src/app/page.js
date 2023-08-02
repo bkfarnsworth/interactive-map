@@ -7,15 +7,14 @@ import { panMouseDown, panMouseMove, panMouseUp, panMouseLeave } from './pan.js'
 import { useEffect } from 'react'
 
 export default function Home() {
-  let rawPerChange;
   useEffect(() => {
-    document.querySelector('#mapContainer').addEventListener('wheel', (event) => { rawPerChange = zoom(event) }, { passive: false })
+    document.querySelector('#mapContainer').addEventListener('wheel', (event) => { zoom(event) }, { passive: false })
     return function () { document.querySelector('#mapContainer').removeEventListener('wheel', zoom) }
   }, [])
   useEffect(() => {
     document.querySelector('#mapContainer').addEventListener('mousedown', panMouseDown);
 
-    document.querySelector('#mapContainer').addEventListener('mousemove', (event) => { panMouseMove(event, rawPerChange) });
+    document.querySelector('#mapContainer').addEventListener('mousemove', (event) => { panMouseMove(event) });
 
     document.querySelector('#mapContainer').addEventListener('mouseup', panMouseUp);
 
@@ -27,6 +26,8 @@ export default function Home() {
         <Image id='bigMap' className='image'
           src={map}
         />
+      </div>
+      <div id='coordView'>
       </div>
     </div>
   )

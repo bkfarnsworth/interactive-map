@@ -48,8 +48,6 @@ function zoom(event) {
 
     }
     printStats(event, level, newWidth, newHeight, mouseOffset, percentChange, "After")
-
-    return rawPerChange;
 }
 
 const getMouseOffset = function (e) {

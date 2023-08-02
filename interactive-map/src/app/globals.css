@@ -28,3 +28,17 @@ body {
   padding-top: 1450px;
   padding: 1450px 2248px;
 }
+
+#coordView {
+  position: absolute;
+  display: flex;
+  height: 50px;
+  width: 100%;
+  background-color: bisque;
+  top: 0;
+  left: 0;
+}
+
+.coord {
+  flex: auto;
+}

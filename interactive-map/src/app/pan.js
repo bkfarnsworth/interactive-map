@@ -1,39 +1,28 @@
 
 var isDragging = false;
-var mouseDownX, mouseDownY, mouseDownXOffset, mouseDownYOffset, scrollLeft, scrollTop;
-let rawPerChangeSnap;
+var mouseDownX, mouseDownY, mouseDownXOffset, mouseDownYOffset, scrollLeft, scrollTop, heightSnap;
 // Handle mouse down event
 export function panMouseDown(event) {
-  event.preventDefault();
-  let mouseOffset = getMouseOffset(event);
-  isDragging = true;
-  mouseDownX = event.clientX;
-  mouseDownY = event.clientY;
-  mouseDownXOffset = mouseOffset.x;
-  mouseDownYOffset = mouseOffset.y;
-  scrollLeft = document.querySelector('#mapContainer').scrollLeft;
-  scrollTop = document.querySelector('#mapContainer').scrollTop;
+  origin(event)
 }
 
 // Handle mouse move event
-export function panMouseMove(event, rawPerChange) {
+export function panMouseMove(event) {
+  let mouseOffset = getMouseOffset(event);
+  document.querySelector('#coordView').innerHTML = `
+  <span class='coord'>MAP - X:${event.offsetX} Y:${event.offsetY}</span>
+  <span class='coord'>MAP CONTAINER - X:${Math.floor(mouseOffset.x)} Y:${Math.floor(mouseOffset.y)}</span>
+  <span class='coord'>BROWSER - X:${event.clientX} Y:${event.clientY}</span>
+  `
   if (!isDragging) {
-    rawPerChangeSnap = rawPerChange
+    heightSnap = document.querySelector('#bigMap').height
     return
   };
-  let percentChange = Math.abs(rawPerChange)
-  if (rawPerChangeSnap != rawPerChange) {
-    if (rawPerChange > 0) {
-      mouseDownY = mouseDownY + ((scrollTop * (1 + percentChange)) + (mouseDownYOffset * (1 + percentChange)) - mouseDownYOffset) - scrollTop;
-      mouseDownX = mouseDownX + ((scrollLeft * (1 + percentChange)) + (mouseDownXOffset * (1 + percentChange)) - mouseDownXOffset) - scrollLeft;
-      console.log('zooming in!!!')
-    } else if (rawPerChange < 0) {
-      mouseDownY = mouseDownY  ((scrollTop * (1 - percentChange)) + (mouseDownYOffset * (1 - percentChange)) - mouseDownYOffset) - scrollTop;
-      mouseDownX = mouseDownX  ((scrollLeft * (1 - percentChange)) + (mouseDownXOffset * (1 - percentChange)) - mouseDownXOffset) - scrollLeft;
-      console.log('zooming out!!!')
-    }
-    rawPerChangeSnap = rawPerChange
+  if (heightSnap != document.querySelector('#bigMap').height) {
+    origin(event)
+    heightSnap = document.querySelector('#bigMap').height
   }
+  console.log(heightSnap)
   event.preventDefault();
   var deltaX = event.clientX - mouseDownX;
   var deltaY = event.clientY - mouseDownY;
@@ -57,3 +46,15 @@ const getMouseOffset = function (e) {
   return { x: x, y: y }
 }
 
+const origin = function (event) {
+  event.preventDefault();
+  let mouseOffset = getMouseOffset(event);
+  isDragging = true;
+  mouseDownX = event.clientX;
+  mouseDownY = event.clientY;
+  mouseDownXOffset = mouseOffset.x;
+  mouseDownYOffset = mouseOffset.y;
+  scrollLeft = document.querySelector('#mapContainer').scrollLeft;
+  scrollTop = document.querySelector('#mapContainer').scrollTop;
+  heightSnap = document.querySelector('#bigMap').height;
+}
