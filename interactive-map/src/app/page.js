@@ -23,9 +23,11 @@ export default function Home() {
   return (
     <div id='edge'>
       <div id='mapContainer'>
-        <Image id='bigMap' className='image'
+        <div id='bigMap' >
+        <Image id='mapActual' className='image'
           src={map}
         />
+        </div>
       </div>
       <div id='coordView'>
       </div>

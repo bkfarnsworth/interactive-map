@@ -4,6 +4,7 @@ let width = 4498;
 const MAX = 2;
 const MIN = .3;
 function zoom(event) {
+    debugger
     event.preventDefault();
     let standardSnap = standard
     if (event.deltaY < 0 && standard < MAX) {
@@ -30,8 +31,8 @@ function zoom(event) {
     let percentChange = Math.abs(rawPerChange);
 
     map.style.padding = `${newHeight / 2}px ${newWidth / 2}px`
-    map.height = newHeight;
-    map.width = newWidth;
+    map.style.height = newHeight + 'px';
+    map.style.width = newWidth + 'px';
 
 
     if (event.deltaY < 0 && standardSnap < MAX) {
