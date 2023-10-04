@@ -23,8 +23,8 @@ export default function Home() {
   return (
     <div id='edge'>
       <div id='mapContainer'>
-        <div id='bigMap' >
-        <Image id='mapActual' className='image'
+        <div id='iconSpace' >
+        <Image id='bigMap' className='image'
           src={map}
         />
         </div>

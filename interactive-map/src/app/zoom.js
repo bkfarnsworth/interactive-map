@@ -16,7 +16,7 @@ function zoom(event) {
         return
     }
 
-    let map = document.querySelector('#bigMap');
+    let map = document.querySelector('#iconSpace');
     let mapContainer = document.querySelector('#mapContainer');
     let mouseOffset = getMouseOffset(event);
 

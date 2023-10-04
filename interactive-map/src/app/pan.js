@@ -12,15 +12,14 @@ export function panMouseMove(event) {
   document.querySelector('#coordView').innerHTML = `
   <span class='coord'>MAP - X:${event.offsetX} Y:${event.offsetY}</span>
   <span class='coord'>MAP CONTAINER - X:${Math.floor(mouseOffset.x)} Y:${Math.floor(mouseOffset.y)}</span>
-  <span class='coord'>BROWSER - X:${event.clientX} Y:${event.clientY}</span>
-  `
+  <span class='coord'>BROWSER - X:${event.clientX} Y:${event.clientY}</span>`
   if (!isDragging) {
-    heightSnap = document.querySelector('#bigMap').height
+    heightSnap = document.querySelector('#iconSpace').offsetHeight
     return
   };
-  if (heightSnap != document.querySelector('#bigMap').height) {
+  if (heightSnap != document.querySelector('#iconSpace').offsetHeight) {
     origin(event)
-    heightSnap = document.querySelector('#bigMap').height
+    heightSnap = document.querySelector('#iconSpace').offsetHeight
   }
   console.log(heightSnap)
   event.preventDefault();
@@ -56,5 +55,5 @@ const origin = function (event) {
   mouseDownYOffset = mouseOffset.y;
   scrollLeft = document.querySelector('#mapContainer').scrollLeft;
   scrollTop = document.querySelector('#mapContainer').scrollTop;
-  heightSnap = document.querySelector('#bigMap').height;
+  heightSnap = document.querySelector('#iconSpace').offsetHeight;
 }
