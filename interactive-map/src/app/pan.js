@@ -1,24 +1,32 @@
 
 var isDragging = false;
-var mouseDownX, mouseDownY, scrollLeft, scrollTop;
-
+var mouseDownX, mouseDownY, mouseDownXOffset, mouseDownYOffset, scrollLeft, scrollTop, heightSnap;
 // Handle mouse down event
 export function panMouseDown(event) {
-  event.preventDefault();
-  isDragging = true;
-  mouseDownX = event.clientX;
-  mouseDownY = event.clientY;
-  scrollLeft = window.scrollX;
-  scrollTop = window.scrollY;
+  origin(event)
 }
 
 // Handle mouse move event
 export function panMouseMove(event) {
-  if (!isDragging) return;
+  let mouseOffset = getMouseOffset(event);
+  document.querySelector('#coordView').innerHTML = `
+  <span class='coord'>MAP - X:${event.offsetX} Y:${event.offsetY}</span>
+  <span class='coord'>MAP CONTAINER - X:${Math.floor(mouseOffset.x)} Y:${Math.floor(mouseOffset.y)}</span>
+  <span class='coord'>BROWSER - X:${event.clientX} Y:${event.clientY}</span>
+  `
+  if (!isDragging) {
+    heightSnap = document.querySelector('#bigMap').height
+    return
+  };
+  if (heightSnap != document.querySelector('#bigMap').height) {
+    origin(event)
+    heightSnap = document.querySelector('#bigMap').height
+  }
+  console.log(heightSnap)
   event.preventDefault();
   var deltaX = event.clientX - mouseDownX;
   var deltaY = event.clientY - mouseDownY;
-  window.scrollTo(scrollLeft - deltaX, scrollTop - deltaY)
+  document.querySelector('#mapContainer').scrollTo(scrollLeft - deltaX, scrollTop - deltaY)
 }
 
 // Handle mouse up event
@@ -31,3 +39,22 @@ export function panMouseLeave() {
   isDragging = false;
 }
 
+const getMouseOffset = function (e) {
+  var rect = mapContainer.getBoundingClientRect();
+  var x = e.clientX - rect.left; //x position within the element.
+  var y = e.clientY - rect.top;  //y position within the element.
+  return { x: x, y: y }
+}
+
+const origin = function (event) {
+  event.preventDefault();
+  let mouseOffset = getMouseOffset(event);
+  isDragging = true;
+  mouseDownX = event.clientX;
+  mouseDownY = event.clientY;
+  mouseDownXOffset = mouseOffset.x;
+  mouseDownYOffset = mouseOffset.y;
+  scrollLeft = document.querySelector('#mapContainer').scrollLeft;
+  scrollTop = document.querySelector('#mapContainer').scrollTop;
+  heightSnap = document.querySelector('#bigMap').height;
+}

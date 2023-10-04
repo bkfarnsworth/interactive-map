@@ -4,42 +4,46 @@ let width = 4498;
 const MAX = 2;
 const MIN = .3;
 function zoom(event) {
+    debugger
     event.preventDefault();
     let standardSnap = standard
     if (event.deltaY < 0 && standard < MAX) {
         standard += .1
-    }else if (event.deltaY > 0 && standard > MIN) {
+    } else if (event.deltaY > 0 && standard > MIN) {
         standard = Math.max(standard - .1, MIN)
-    }else{console.log('returning')
+    } else {
+        console.log('returning')
         return
     }
 
     let map = document.querySelector('#bigMap');
     let mapContainer = document.querySelector('#mapContainer');
     let mouseOffset = getMouseOffset(event);
-    let currentScollTop = mapContainer.scrollTop;
-    let currentScollLeft = mapContainer.scrollLeft;
+
+    let currentScrollTop = mapContainer.scrollTop;
+    let currentScrollLeft = mapContainer.scrollLeft;
 
     let level = Math.round(Math.min(Math.max(standard, MIN), MAX) * 10) / 10
     let oldLevel = Math.round(Math.min(Math.max(standardSnap, MIN), MAX) * 10) / 10
     let newHeight = Math.floor(height * level);
     let newWidth = Math.floor(width * level);
-    let percentChange = Math.abs((level - oldLevel) / oldLevel);
+    let rawPerChange = (level - oldLevel) / oldLevel;
+    let percentChange = Math.abs(rawPerChange);
 
-    map.height = newHeight;
-    map.width = newWidth;
-    map.style.padding = `${newHeight/2}px ${newWidth/2}px`;
+    map.style.padding = `${newHeight / 2}px ${newWidth / 2}px`
+    map.style.height = newHeight + 'px';
+    map.style.width = newWidth + 'px';
 
 
     if (event.deltaY < 0 && standardSnap < MAX) {
-        let newScrollTop = (currentScollTop * (1 + percentChange)) + (mouseOffset.y * (1 + percentChange)) - mouseOffset.y;
-        let newScrollLeft = (currentScollLeft * (1 + percentChange)) + (mouseOffset.x * (1 + percentChange)) - mouseOffset.x;
+        let newScrollTop = (currentScrollTop * (1 + percentChange)) + (mouseOffset.y * (1 + percentChange)) - mouseOffset.y;
+        let newScrollLeft = (currentScrollLeft * (1 + percentChange)) + (mouseOffset.x * (1 + percentChange)) - mouseOffset.x;
         mapContainer.scrollLeft = newScrollLeft
         mapContainer.scrollTop = newScrollTop;
     }
     if (event.deltaY > 0 && standard > MIN) {
-        let newScrollTop = (currentScollTop * (1 - percentChange)) + (mouseOffset.y * (1 - percentChange)) - mouseOffset.y;
-        let newScrollLeft = (currentScollLeft * (1 - percentChange)) + (mouseOffset.x * (1 - percentChange)) - mouseOffset.x;
+        let newScrollTop = (currentScrollTop * (1 - percentChange)) + (mouseOffset.y * (1 - percentChange)) - mouseOffset.y;
+        let newScrollLeft = (currentScrollLeft * (1 - percentChange)) + (mouseOffset.x * (1 - percentChange)) - mouseOffset.x;
         mapContainer.scrollLeft = newScrollLeft
         mapContainer.scrollTop = newScrollTop;
 
@@ -68,6 +72,6 @@ const printStats = function (event, level, newWidth, newHeight, mouseOffset, per
     console.log(`%cMouseX: ${mouseOffset.x} MouseY: ${mouseOffset.y}`, 'color: #68cbd8')
     console.log(((() => upperCornerMapRelToMC) + ':').slice(4), upperCornerMapRelToMC);
     console.log(((() => percentChange) + ':').slice(4), percentChange);
-    console.log(`altered standard: ${Math.round(standard*10)/10}`)
+    console.log(`altered standard: ${Math.round(standard * 10) / 10}`)
 }
 export default zoom
